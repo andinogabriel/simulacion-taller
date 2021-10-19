@@ -1,16 +1,16 @@
 import { useState } from "react";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableRow, TablePagination} from '@mui/material';
 import { TablePaginationActions } from './table/TablePagination';
-
+import { population } from "../utils/moranProcess";
 
 export const TableSimu = () => {
   
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [rows, setRows] = useState([['R', 'M', 'R'], ['R', 'R'], ['M', 'M'], ['R', 'R', 'M']]);
+    const [matrix, setMatrix] = useState(population);
 
     // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - matrix[0].length) : 0;
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -31,8 +31,8 @@ export const TableSimu = () => {
             <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
                 <TableBody>
                 {(rowsPerPage > 0
-                    ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    : rows
+                    ? matrix.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    : matrix
                 ).map((row, i) => (
                     <TableRow key={i}>
                         <TableCell component="th" scope="row">
@@ -59,7 +59,7 @@ export const TableSimu = () => {
                     <TablePagination
                     rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                     colSpan={3}
-                    count={rows.length}
+                    count={matrix[0].length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     SelectProps={{
