@@ -1,13 +1,17 @@
 import { useState } from "react";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableRow, TablePagination} from '@mui/material';
 import { TablePaginationActions } from './table/TablePagination';
-import { population } from "../utils/moranProcess";
+//import { population } from "../utils/moranProcess";
 
-export const TableSimu = () => {
+interface typeMatrix {
+    matrix: string[][];
+}
+
+export const TableSimu = ({matrix}: typeMatrix ) => {
   
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [matrix, setMatrix] = useState(population);
+    //const [matrix, setMatrix] = useState([["R", "R", "R", "R", "R", "R", "R", "R", "R", "R"]]);
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - matrix[0].length) : 0;
