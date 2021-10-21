@@ -29,8 +29,7 @@ function App() {
 
   const onSubmit: SubmitHandler<Inputs> = ({simulations}) => {
     console.log(simulations);
-    processMoran(simulations, population, setPopulation);
-    
+    processMoran(simulations, setPopulation, population);
   };
 
   return (

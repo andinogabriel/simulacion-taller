@@ -11,9 +11,9 @@ export const probabilityMatrix = [
     [0.15, 0.07, 0.02, 0.09, 0.20, 0.05, 0.20, 0.12, 0.10, 0.00]
 ];
 
+export let arrayPopulation =  ["R", "R", "R", "R", "R", "R", "R", "R", "R", "R"];
 
-
-export const moranFunction = (row: number, probability: number): number => {
+export const moranFunction = (row: number, probability: number) => {
     let closerProbability = 0.99;
     let column = -1;
     let absolutProb: number;
@@ -24,21 +24,22 @@ export const moranFunction = (row: number, probability: number): number => {
             column = index;
         }
     });
-    return column;
+ 
+    return  column;
 };
 
-const updatePopulation = (row: number, column: number, breeder: number, population: string[][]) => {
-    population[row][breeder] === "M" ? population[row][column] = "M"
-        : population[row][column] = "R";
-    return population[row][breeder];
+const updatePopulation = (column: number, columnRep: number) => {
+    if(arrayPopulation[columnRep] === "R") arrayPopulation[column] = "R"
+    else arrayPopulation[column] = "M";
 };
 
-export const processMoran = (iteraciones: number, population: string[][], setPopulation: Function) => {
+export const processMoran = (iteraciones: number, setPopulation: Function, population: string[][]) => {
     console.log(iteraciones);
     const min = 0;
     const max = 9;
-    const range = max - min + 1;
-    const selectionMutant = Math.trunc(Math.random() * range);
+    const range = max - min;
+    const repSelect = Math.trunc(Math.random() * range);
+    arrayPopulation[repSelect] = "M";
 
     //Iteraciones del proceso de moran
     const reMinimo =0.01;
@@ -46,16 +47,15 @@ export const processMoran = (iteraciones: number, population: string[][], setPop
     const reRange = reMaximo - reMinimo;
 
     for (let index = 0; index < iteraciones; index++) {
+        
         const seleccionReproductor =   Math.trunc((Math.random() * range));
         const deathProb = Math.random() * reRange + reMinimo;
-        //Aca falta la logica, a la matriz population que recibimos que al pricipio viene una matriz con una sola fila, bueno en cada iteracion a la matriz hay que agregarle un array nuevo, con la funcion setPopulation le iriamos agregando un nuevo array. seria algo asi --> setPopulation([...population, nuevoArrayGenerado]). Trata de hacer la logica de que genere ese nuevo array para insertarlo en la matriz.
 
-        const reemplazoProb = moranFunction(seleccionReproductor, deathProb);
-
-        //Esto explota
-        let copy = [...population];
-        copy[index][seleccionReproductor] = updatePopulation(index, reemplazoProb, seleccionReproductor, population);
-        setPopulation(copy);
+        const column = moranFunction(seleccionReproductor, deathProb);
+        updatePopulation(column, repSelect);
+        setPopulation((_oldMatrix: string[]) => [..._oldMatrix, arrayPopulation]);
+        //Guardar el array anterior e igualarlo al arrayPopulation...
+        //arrayPopulation =  ["R", "R", "R", "R", "R", "R", "R", "R", "R", "R"];
     }
 };
 
