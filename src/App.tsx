@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler  } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Alert, Box, Button, Card, CardContent, Paper, Grid } from '@mui/material';
+import { Alert, Box, Button, Card, CardContent, Paper, Grid, Typography } from '@mui/material';
 import { FormInputText } from './components/inputs/FormInputText';
 import { processMoran } from './utils/moranProcess';
 import { SimuTable } from './components/table/SimuTable';
@@ -78,25 +78,25 @@ function App() {
         <Card className="card-root" variant="outlined" >
           {
             firstMutant && 
-              <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1}>
+              <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
                 <Alert variant="outlined" severity="warning">
-                  El primer mutante fue el {firstMutant}º residente.
+                  <Typography variant="body1">El primer mutante fue el {firstMutant}º residente.</Typography>
                 </Alert>
               </Box>
           }
           {
             residentSaves > -1 && 
-              <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1}>
+              <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
                 <Alert variant="outlined" severity="success">
-                  La humanidad se salvo en la {residentSaves}º simulación.
+                <Typography variant="body1">La humanidad se salvo en la {residentSaves}º simulación.</Typography>
                 </Alert>
               </Box>
           }
           {
             residentSaves === -1 && simulations > 1 && 
-              <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1}>
+              <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
                 <Alert variant="outlined" severity="error">
-                  La amenaza mutante sigue latente luego de {simulations} simulaciones.
+                <Typography variant="body1">La amenaza mutante sigue latente luego de {simulations} simulaciones.</Typography>
                 </Alert>
               </Box>
           }
