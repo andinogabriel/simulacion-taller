@@ -11,7 +11,8 @@ export const probabilityMatrix = [
     [0.15, 0.07, 0.02, 0.09, 0.20, 0.05, 0.20, 0.12, 0.10, 0.00]
 ];
 
-export let arrayPopulation =  ["R", "R", "R", "R", "R", "R", "R", "R", "R", "R"];
+
+const arrayPopulation =  ["R", "R", "R", "R", "R", "R", "R", "R", "R", "R"];
 
 export const moranFunction = (row: number, probability: number) => {
     let closerProbability = 0.99;
@@ -28,34 +29,43 @@ export const moranFunction = (row: number, probability: number) => {
     return  column;
 };
 
-const updatePopulation = (column: number, columnRep: number) => {
-    if(arrayPopulation[columnRep] === "R") arrayPopulation[column] = "R"
-    else arrayPopulation[column] = "M";
+const updatePopulation = (column: number, columnRep: number, array: string[]) => {
+    let newArray = [...array];
+    if(newArray[columnRep] === "R") newArray[column] = "R"
+    else newArray[column] = "M";
+    return newArray;
 };
 
-export const processMoran = (iteraciones: number, setPopulation: Function, population: string[][]) => {
+//Aca arranca el flow diagram XD
+export const processMoran = (iteraciones: number): string[][] => {
+    let matrixPopulation = [
+        ["R", "R", "R", "R", "R", "R", "R", "R", "R", "R"],
+    ];
+
     console.log(iteraciones);
+    
     const min = 0;
     const max = 9;
     const range = max - min;
     const repSelect = Math.trunc(Math.random() * range);
-    arrayPopulation[repSelect] = "M";
+    matrixPopulation[0][repSelect] = "M";
 
     //Iteraciones del proceso de moran
     const reMinimo =0.01;
     const reMaximo =0.99;
     const reRange = reMaximo - reMinimo;
 
-    for (let index = 0; index < iteraciones; index++) {
+    for (let index = 1; index < iteraciones; index++) {
         
-        const seleccionReproductor =   Math.trunc((Math.random() * range));
+        const seleccionReproductor =   Math.trunc(Math.random() * range);
+        console.log("Reproductor columna: ", seleccionReproductor);
         const deathProb = Math.random() * reRange + reMinimo;
-
+        
         const column = moranFunction(seleccionReproductor, deathProb);
-        updatePopulation(column, repSelect);
-        setPopulation((_oldMatrix: string[]) => [..._oldMatrix, arrayPopulation]);
-        //Guardar el array anterior e igualarlo al arrayPopulation...
-        //arrayPopulation =  ["R", "R", "R", "R", "R", "R", "R", "R", "R", "R"];
+        console.log("Columna a reemplazar: ", column)
+        const newArray = updatePopulation(column, seleccionReproductor, matrixPopulation[index-1]);
+        matrixPopulation[index] = newArray;
     }
+    return matrixPopulation;
 };
 

@@ -6,6 +6,7 @@ import { Box, Card, CardContent, Paper, Grid } from '@mui/material';
 import { TableSimu } from './components/TableSimu';
 import { FormInputText } from './components/inputs/FormInputText';
 import { processMoran } from './utils/moranProcess';
+import { SimuTable } from './components/table/SimuTable';
 
 const validationSchema = yup.object().shape({
   simulations: yup.number()
@@ -29,7 +30,7 @@ function App() {
 
   const onSubmit: SubmitHandler<Inputs> = ({simulations}) => {
     console.log(simulations);
-    processMoran(simulations, setPopulation, population);
+    setPopulation(processMoran(simulations));
   };
 
   return (
@@ -50,7 +51,7 @@ function App() {
         <Paper elevation={7}>
         <Card className="card-root" variant="outlined" >
           <CardContent>
-            <TableSimu matrix={population}/>
+            <SimuTable matrix={population}/>
           </CardContent>
         </Card>
         </Paper>
