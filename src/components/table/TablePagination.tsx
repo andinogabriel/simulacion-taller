@@ -1,5 +1,8 @@
 import Box from '@mui/material/Box';
-import {LastPage, KeyboardArrowRight, KeyboardArrowLeft, FirstPage} from '@mui/icons-material';
+import LastPage from '@mui/icons-material/LastPage';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import FirstPage from '@mui/icons-material/FirstPage';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 

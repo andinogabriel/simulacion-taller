@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { Paper, TableContainer, Table, TableRow, TableBody, TableCell, TablePagination } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import TableContainer from '@mui/material/TableContainer';
+import Table from '@mui/material/Table';
+import TableRow from '@mui/material/TableRow';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TablePagination from '@mui/material/TablePagination';
 
 interface typeMatrix {
     matrix: string[][];
@@ -33,9 +39,9 @@ export const SimuTable = ({matrix}: typeMatrix) => {
                                         {
                                             col === 'M'
                                             ? 
-                                                <img src="https://cdn-icons.flaticon.com/png/512/4402/premium/4402987.png?token=exp=1634928423~hmac=53e5e4085adc6ef31891e9260f742ea2" alt="Mutante" style={{width: "100px"}}/>
+                                                <img src={require('../../assets/images/mutant.png')} alt="Mutante" style={{width: "100px"}}/>
                                             : 
-                                                <img src="https://cdn-icons.flaticon.com/png/512/2880/premium/2880690.png?token=exp=1634928521~hmac=cd3acc63bd8ac723c0484ff54a5740df" alt="Residente" style={{width: "100px"}}/>
+                                                <img src={require('../../assets/images/resident.png')} alt="Residente" style={{width: "100px"}}/>
                                         }
                                     </TableCell>
                                 ))
