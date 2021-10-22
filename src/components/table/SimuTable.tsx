@@ -39,9 +39,9 @@ export const SimuTable = ({matrix}: typeMatrix) => {
                                         {
                                             col === 'M'
                                             ? 
-                                                <img src={require('../../assets/images/mutant.png')} alt="Mutante" style={{width: "100px"}}/>
+                                                <img src={require('../../assets/images/mutant.png').default} alt="Mutante" style={{width: "80px"}}/>
                                             : 
-                                                <img src={require('../../assets/images/resident.png')} alt="Residente" style={{width: "100px"}}/>
+                                                <img src={require('../../assets/images/resident.png').default} alt="Residente" style={{width: "80px"}}/>
                                         }
                                     </TableCell>
                                 ))
