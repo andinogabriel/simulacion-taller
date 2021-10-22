@@ -7,10 +7,8 @@ interface typeMatrix {
 export const SimuTable = ({matrix}: typeMatrix) => {
 
 
-
-
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -35,9 +33,9 @@ export const SimuTable = ({matrix}: typeMatrix) => {
                                         {
                                             col === 'M'
                                             ? 
-                                                <img src="https://www.redusers.com/noticias/wp-content/uploads/2016/07/graham-650x442.jpg" alt="Mutante" style={{width: "150px", margin: "5px"}}/>
+                                                <img src="https://cdn-icons.flaticon.com/png/512/4402/premium/4402987.png?token=exp=1634928423~hmac=53e5e4085adc6ef31891e9260f742ea2" alt="Mutante" style={{width: "100px"}}/>
                                             : 
-                                                <img src="https://i.ytimg.com/vi/O4f58BU_Hbs/maxresdefault.jpg" alt="Residente" style={{width: "150px", margin: "5px"}}/>
+                                                <img src="https://cdn-icons.flaticon.com/png/512/2880/premium/2880690.png?token=exp=1634928521~hmac=cd3acc63bd8ac723c0484ff54a5740df" alt="Residente" style={{width: "100px"}}/>
                                         }
                                     </TableCell>
                                 ))
@@ -49,13 +47,14 @@ export const SimuTable = ({matrix}: typeMatrix) => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[5, 10, 20]}
           component="div"
-          count={matrix[0].length}
+          count={matrix.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          labelRowsPerPage="Simulaciones por pagina"
         />
       </Paper>
     );
