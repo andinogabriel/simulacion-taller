@@ -36,13 +36,24 @@ const updatePopulation = (column: number, columnRep: number, array: string[]) =>
 };
 
 const allAreResidents = (matrix: string[][]): number => {
-    for (let index = 0; index < matrix.length; index++) {
+    const n = matrix.length;
+    for (let index = 0; index < n; index++) {
         if(!matrix[index].includes('M')) {
             return index+1;
           }
     }
     return -1;
 }
+
+export const areAllMutants = (matrix: string[][]): number => {
+    const n = matrix.length;
+    for (let index = 0; index < n; index++) {
+        if(!matrix[index].includes('R')) {
+            return index+1;
+          }
+    }
+    return -1;
+};
 
 //Aca arranca el flow diagram XD
 export const processMoran = (iteraciones: number, setFirstMutant: Function): {matrix: string[][], safeSimulation: number} => {

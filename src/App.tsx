@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FormInputText } from './components/inputs/FormInputText';
-import { processMoran } from './utils/moranProcess';
+import { processMoran, areAllMutants } from './utils/moranProcess';
 import { SimuTable } from './components/table/SimuTable';
 import { NavigationBar } from './components/navbar/NavigationBar';
 
@@ -36,6 +36,7 @@ function App() {
   const [population, setPopulation] = useState([
     ["R", "R", "R", "R", "R", "R", "R", "R", "R", "R"],
   ]);
+  const [allAreMutants, setallAreMutants] = useState(-1);
   
   const { handleSubmit, control, getValues } = useForm({defaultValues: {simulations: 1}, resolver: yupResolver(validationSchema)});
 
@@ -51,6 +52,7 @@ function App() {
     const {matrix, safeSimulation} = processMoran(simulations, setFirstMutant);
     setPopulation(matrix);
     setResidentSaves(safeSimulation);
+    setallAreMutants(areAllMutants(matrix));
   };
 
   return (
@@ -87,7 +89,9 @@ function App() {
             firstMutant && 
               <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
                 <Alert variant="outlined" severity="warning">
-                  <Typography variant="body1">El primer mutante fue el {firstMutant}º residente.</Typography>
+                  <Typography variant="body1">
+                    El primer mutante fue el {firstMutant}º residente.
+                  </Typography>
                 </Alert>
               </Box>
           }
@@ -95,19 +99,31 @@ function App() {
             residentSaves > -1 && 
               <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
                 <Alert variant="outlined" severity="success">
-                <Typography variant="body1">La humanidad se salvo en la {residentSaves}º simulación.</Typography>
+                  <Typography variant="body1">
+                    La humanidad se salvo en la {residentSaves}º simulación.
+                  </Typography>
                 </Alert>
               </Box>
           }
           {
-            residentSaves === -1 && simulations > 1 && 
+            residentSaves === -1 && simulations > 1 && allAreMutants < 0 &&
               <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
                 <Alert variant="outlined" severity="error">
-                <Typography variant="body1">La amenaza mutante sigue latente luego de {simulations} simulaciones.</Typography>
+                  <Typography variant="body1">
+                    La amenaza mutante sigue latente luego de {simulations} simulaciones.
+                  </Typography>
                 </Alert>
               </Box>
           }
-
+          {
+            allAreMutants > 0 && simulations > 1 &&
+              <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
+                <Alert variant="outlined" severity="error">
+                  <Typography variant="body1">
+                    Los mutantes exterminaron a todos los residentes en la {allAreMutants}º simulación.</Typography>
+                  </Alert>
+              </Box>
+          }
           <CardContent>
             <SimuTable matrix={population}/>
           </CardContent>
