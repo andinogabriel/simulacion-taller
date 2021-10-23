@@ -96,17 +96,16 @@ function App() {
               </Box>
           }
           {
-            residentSaves > -1 && 
-              <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
-                <Alert variant="outlined" severity="success">
-                  <Typography variant="body1">
-                    La humanidad se salvo en la {residentSaves}º simulación.
-                  </Typography>
-                </Alert>
-              </Box>
-          }
-          {
-            residentSaves === -1 && simulations > 1 && allAreMutants < 0 &&
+            residentSaves > -1 ?
+            <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
+              <Alert variant="outlined" severity="success">
+                <Typography variant="body1">
+                  La humanidad se salvo en la {residentSaves}º simulación.
+                </Typography>
+              </Alert>
+            </Box>
+            :
+            residentSaves === -1 && simulations > 1 && allAreMutants < 0 ?
               <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
                 <Alert variant="outlined" severity="error">
                   <Typography variant="body1">
@@ -114,9 +113,8 @@ function App() {
                   </Typography>
                 </Alert>
               </Box>
-          }
-          {
-            allAreMutants > 0 && simulations > 1 &&
+              :
+              allAreMutants > 0 && simulations > 1 &&
               <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
                 <Alert variant="outlined" severity="error">
                   <Typography variant="body1">
