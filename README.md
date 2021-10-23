@@ -15,3 +15,6 @@ Nuestro objetivo como simulación, es establecer quién predominará más en la 
 * Abrir la consola del IDE con la ruta de la carpeta del proyecto.
 * Ejecuta`npm install` (única vez) en la consola de tu IDE.
 * Una vez instaladas las dependencias, ejecuta `npm start` para ponerlo en ejecución.
+
+## Heroku
+- [Simulacion-taller](https://simulacion-taller.herokuapp.com)
