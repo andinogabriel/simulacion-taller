@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FormInputText } from './components/inputs/FormInputText';
-import { processMoran, areAllMutants } from './utils/moranProcess';
+import { processMoran } from './utils/moranProcess';
 import { SimuTable } from './components/table/SimuTable';
 import { NavigationBar } from './components/navbar/NavigationBar';
 
@@ -32,11 +32,11 @@ type Inputs = {
 function App() {
 
   const [firstMutant, setFirstMutant] = useState(null);
-  const [residentSaves, setResidentSaves] = useState(-1);
+  const [numSimulations, setNumSimulations] = useState(0);
   const [population, setPopulation] = useState([
     ["R", "R", "R", "R", "R", "R", "R", "R", "R", "R"],
   ]);
-  const [allAreMutants, setallAreMutants] = useState(-1);
+  const [populationLength, setPopulationLength] = useState(-1);
   
   const { handleSubmit, control, getValues } = useForm({defaultValues: {simulations: 1}, resolver: yupResolver(validationSchema)});
 
@@ -47,12 +47,12 @@ function App() {
   useEffect(() => {
   }, [simulations]);
 
-  console.log(residentSaves);
+ 
   const onSubmit: SubmitHandler<Inputs> = ({simulations}) => {
-    const {matrix, safeSimulation} = processMoran(simulations, setFirstMutant);
+    const {matrix, numSimulations} = processMoran(simulations, setFirstMutant);
     setPopulation(matrix);
-    setResidentSaves(safeSimulation);
-    setallAreMutants(areAllMutants(matrix));
+    setNumSimulations(numSimulations);
+    setPopulationLength(matrix.length);
   };
 
   return (
@@ -96,31 +96,43 @@ function App() {
               </Box>
           }
           {
-            residentSaves > -1 ?
-            <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
-              <Alert variant="outlined" severity="success">
-                <Typography variant="body1">
-                  La humanidad se salvo en la {residentSaves}º simulación.
-                </Typography>
-              </Alert>
-            </Box>
-            :
-            residentSaves === -1 && simulations > 1 && allAreMutants < 0 ?
+            numSimulations > 0 && numSimulations > 0 && !population[populationLength-1]?.includes('M') ?
               <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
-                <Alert variant="outlined" severity="error">
+                <Alert variant="outlined" severity="success">
                   <Typography variant="body1">
-                    La amenaza mutante sigue latente luego de {simulations} simulaciones.
+                    {
+                      numSimulations === Number(simulations) ?
+                        `La humanidad se salvo en la ${numSimulations}º simulación.`
+                        :
+                        `La humanidad se salvo en la ${numSimulations}º simulación.
+                        No es necesario realizar las ${simulations} simulaciones.`
+                    }
                   </Typography>
                 </Alert>
               </Box>
               :
-              allAreMutants > 0 && simulations > 1 &&
-              <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
-                <Alert variant="outlined" severity="error">
-                  <Typography variant="body1">
-                    Los mutantes exterminaron a todos los residentes en la {allAreMutants}º simulación.</Typography>
+              numSimulations > 0 && populationLength > 0 && !population[populationLength-1].includes('R') ?
+               <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
+                 <Alert variant="outlined" severity="error">
+                   <Typography variant="body1">
+                   {
+                    numSimulations === Number(simulations) ?
+                      `Los mutantes exterminaron a todos los residentes en la ${numSimulations}º simulación.`
+                    :
+                      `Los mutantes exterminaron a todos los residentes en la ${numSimulations}º simulación.
+                      No es necesario realizar las ${simulations} simulaciones.`
+                    }
+                    </Typography>
                   </Alert>
-              </Box>
+               </Box>
+               : numSimulations > 0 &&
+                <Box textAlign="center" sx={{ fontWeight: 500 }} mt={1} mx={2}>
+                  <Alert variant="outlined" severity="error">
+                    <Typography variant="body1">
+                      La amenaza mutante sigue latente luego de {simulations} simulaciones.
+                    </Typography>
+                  </Alert>
+                </Box>
           }
           <CardContent>
             <SimuTable matrix={population}/>

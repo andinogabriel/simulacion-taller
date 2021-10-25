@@ -11,23 +11,6 @@ export const probabilityMatrix = [
     [0.15, 0.07, 0.02, 0.09, 0.20, 0.05, 0.20, 0.12, 0.10, 0.00]
 ];
 
-
-
-export const moranFunction = (row: number, probability: number) => {
-    let closerProbability = 0.99;
-    let column = -1;
-    let absolutProb: number;
-    probabilityMatrix[row].forEach((cell: number, index: number) => {
-        absolutProb = Math.abs(probability - cell);
-        if(absolutProb < closerProbability) {
-            closerProbability = absolutProb;
-            column = index;
-        }
-    });
- 
-    return  column;
-};
-
 const updatePopulation = (column: number, columnRep: number, array: string[]) => {
     let newArray = [...array];
     if(newArray[columnRep] === 'R') newArray[column] = 'R'
@@ -35,50 +18,33 @@ const updatePopulation = (column: number, columnRep: number, array: string[]) =>
     return newArray;
 };
 
-const allAreResidents = (matrix: string[][]): number => {
-    const n = matrix.length;
-    for (let index = 0; index < n; index++) {
-        if(!matrix[index].includes('M')) {
-            return index+1;
-          }
-    }
-    return -1;
-}
-
-export const areAllMutants = (matrix: string[][]): number => {
-    const n = matrix.length;
-    for (let index = 0; index < n; index++) {
-        if(!matrix[index].includes('R')) {
-            return index+1;
-          }
-    }
-    return -1;
-};
-
 //Aca arranca el flow diagram XD
-export const processMoran = (iteraciones: number, setFirstMutant: Function): {matrix: string[][], safeSimulation: number} => {
+export const processMoran = (iteraciones: number, setFirstMutant: Function): {matrix: string[][], numSimulations: number} => {
     let matrixPopulation = [
         ['R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R'],
     ];
     const repSelect = Math.floor(Math.random() * 10);
     setFirstMutant(repSelect + 1);
     matrixPopulation[0][repSelect] = 'M';
-
     //Iteraciones del proceso de moran
     const reMinimo =0.01;
     const reMaximo =0.99;
     const reRange = reMaximo - reMinimo;
-
     for (let index = 1; index < iteraciones; index++) {
-        
         const seleccionReproductor =   Math.floor(Math.random() * 10);
         const deathProb = Math.random() * reRange + reMinimo;
-        
-        const column = moranFunction(seleccionReproductor, deathProb);
-        const newArray = updatePopulation(column, seleccionReproductor, matrixPopulation[index-1]);
+        let acumulator = 0;
+        let j = -1;
+        while(acumulator < deathProb) {
+            j++;
+            acumulator = acumulator + probabilityMatrix[seleccionReproductor][j];
+        }
+        const newArray = updatePopulation(j, seleccionReproductor, matrixPopulation[index-1]);
         matrixPopulation[index] = newArray;
+        if(matrixPopulation[index].every((value) => value === matrixPopulation[index][0])) {
+            return {'matrix': matrixPopulation, 'numSimulations': index+1};
+        }
     }
-    const residentsSave = allAreResidents(matrixPopulation);
-    return {'matrix': matrixPopulation, 'safeSimulation': residentsSave};
+    return {'matrix': matrixPopulation, 'numSimulations': iteraciones};
 };
 
