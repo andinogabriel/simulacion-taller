@@ -14,8 +14,8 @@ import { FormInputText } from './components/inputs/FormInputText';
 import { processMoran } from './utils/moranProcess';
 import { SimuTable } from './components/table/SimuTable';
 import { NavigationBar } from './components/navbar/NavigationBar';
-
-
+import { StickyFooter } from './components/footer/StickyFooter';
+import { MultiAxisLine } from './components/charts/MultiAxisLine';
 
 const validationSchema = yup.object().shape({
   simulations: yup.number()
@@ -54,6 +54,7 @@ function App() {
     setNumSimulations(numSimulations);
     setPopulationLength(matrix.length);
   };
+
 
   return (
     <>
@@ -139,7 +140,12 @@ function App() {
           </CardContent>
         </Card>
         </Paper>
+        {
+          population[0].includes('M') &&
+            <MultiAxisLine matrix={population}/>
+        }
       </Box>
+      <StickyFooter/>
     </>
   );
 }
