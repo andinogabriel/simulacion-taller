@@ -18,7 +18,7 @@ Nuestro objetivo como simulación, es establecer quién predominará más en la 
 
 ## Diagramas de flujo
 - [Diagrama-código](https://github.com/andinogabriel/simulacion-taller/blob/main/images/Diagrama%20taller.jpg)
-- [Flowchart](https://github.com/andinogabriel/simulacion-taller/blob/main/images/classic%20Flowchar.jpg)
+- [Flowchart](https://github.com/andinogabriel/simulacion-taller/blob/main/images/classic%20Flowchar(1).jpg)
 
 ## Heroku
 - [Simulacion-taller](https://simulacion-taller.herokuapp.com)
