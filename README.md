@@ -17,8 +17,8 @@ Nuestro objetivo como simulación, es establecer quién predominará más en la 
 * Una vez instaladas las dependencias, ejecuta `npm start` para ponerlo en ejecución.
 
 ## Diagramas de flujo
-- [Diagrama-código](https://github.com/andinogabriel/simulacion-taller/blob/main/images/Diagrama%20taller.png)
-- [Flowchart](https://github.com/andinogabriel/simulacion-taller/blob/main/images/Taller-Simulacion.jpg)
+- [Diagrama-código](https://github.com/andinogabriel/simulacion-taller/blob/main/images/Diagrama%20taller.jpg)
+- [Flowchart](https://github.com/andinogabriel/simulacion-taller/blob/main/images/classic%20Flowchar(1).jpg)
 
 ## Heroku
 - [Simulacion-taller](https://simulacion-taller.herokuapp.com)
