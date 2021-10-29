@@ -59,7 +59,7 @@ export const MultiAxisLine = ({matrix}: typeMatrix) => {
                 component="footer"
                 sx={{
                 borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-                    mt: 1,
+                    mt: -2,
                     py: [3, 6],
                 }}
             >

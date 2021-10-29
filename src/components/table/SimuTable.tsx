@@ -60,7 +60,7 @@ export const SimuTable = ({matrix}: typeMatrix) => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          labelRowsPerPage="Simulaciones por pagina"
+          labelRowsPerPage="Simulaciones por página"
         />
       </Paper>
     );

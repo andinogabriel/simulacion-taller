@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary">
+    <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://moodle.uncaus.edu.ar/">
         Simulación {new Date().getFullYear()} - UNCAus
@@ -22,7 +22,7 @@ export const StickyFooter = () => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                minHeight: '400px',
+                minHeight: '100vh',
             }}
         >
             <CssBaseline />
@@ -39,7 +39,7 @@ export const StickyFooter = () => {
                 }}
             >
                 <Container maxWidth="sm">
-                    <Typography variant="body1">
+                    <Typography variant="body1" align="center">
                         Ingeniería en Sistemas de Información
                     </Typography>
                     <Copyright/>

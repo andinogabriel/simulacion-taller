@@ -16,6 +16,19 @@ import { SimuTable } from './components/table/SimuTable';
 import { NavigationBar } from './components/navbar/NavigationBar';
 import { StickyFooter } from './components/footer/StickyFooter';
 import { MultiAxisLine } from './components/charts/MultiAxisLine';
+import createTheme from '@mui/material/styles/createTheme';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import { esES } from '@mui/material/locale';
+
+
+const theme = createTheme(
+  {
+    palette: {
+      primary: { main: '#1976d2' },
+    },
+  },
+  esES,
+);
 
 const validationSchema = yup.object().shape({
   simulations: yup.number()
@@ -57,7 +70,7 @@ function App() {
 
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <NavigationBar/>
       <Grid
         container
@@ -84,7 +97,7 @@ function App() {
       </Grid>
       
       <Box mt={5}>
-        <Paper elevation={10}>
+        <Paper elevation={6}>
         <Card className="card-root" variant="outlined" >
           {
             firstMutant && 
@@ -146,7 +159,7 @@ function App() {
         }
       </Box>
       <StickyFooter/>
-    </>
+    </ThemeProvider>
   );
 }
 
